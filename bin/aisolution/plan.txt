@@ -1,0 +1,111 @@
+클래스
+- Customer
+필드
+age
+gender
+location
+time
+객체 개수 : 유저입력
+3명
+1번
+2번
+3번
+{1번, 2번, 3번} = customer[]
+- Customers
+customer[]
+모든 커스터머[]
+
+얘들은 모두 커스터머의 배열이다.
+커스터머즈의 객체다
+Cusomers ideal
+Cusomers likely
+Cusomers defect
+Cusomers others
+
+- Parameter
+필드
+min age
+max age
+gender
+location
+time
+객체
+ideal, likely, defect <<
+
+- Parameters
+필드
+Parameter[]
+
+3개의 파라메터를 저장하는 배열
+3개의 파라메터는 즉 객체들
+
+- Main
+
+
+
+
+함수
+1. Set Customer Parameter
+	1) Set Parameter
+		- choose group() // ideal, likely, defect
+			(1) setAge()
+				- minAge
+				- maxAge
+			(2) setGender()
+			(3) setLocation()
+			(4) setOnlineSpentTime()
+		
+	2) View Parameter (분류기준)
+		- choose group() // ideal, likely, defect
+			(1) getIdeal() // group type, parameter
+			(2) getLikely() // group type, parameter
+			(3) getDefect() // group type, parameter
+
+	3) Edit Parameter
+		- choose group() // ideal, likely, defect
+			(1) setAge()
+				- minAge
+				- maxAge
+			(2) setGender()
+			(3) setLocation()
+			(4) setOnlineSpentTime()
+
+2. Enter Customer Data
+	1) Set Customer Data
+		- input how many customers 3
+			객체가 하나씩 생성된다
+			(1) setAge()
+			(2) setGender()
+			(3) setLocation()
+			(4) setOnlineSpentTime()
+			(5) close
+ 생성이 다 되면
+커스터머에 대한 배열이 생성
+커스터머 객체1,
+커 객 2
+커스터머[0, 1, 2]
+		
+	2) View Customer Data
+		getCustomer[]() // 커스터머 배열의 내용을 출력하는 함수
+	3) Edit Customer Data
+		- choose Customer[no.]
+			(1) setAge()
+			(2) setGender()
+			(3) setLocation()
+			(4) setOnlineSpentTime()
+
+3. Summary
+		1) get ideal group[]
+		2) get likely group[]
+		3) get defect[]
+		4) get others[]
+배열의 내용을 보여준다
+
+
+
+4. 다른 것들
+	1) customer[] 만드는 함수
+	2) parameter[] 만드는 함수
+	3) customer 분류하는 함수
+		- 이중 for문 사용하여 customer[커스터머의 객체1, 2, 3]을 parameter와 비교…
+	4) 

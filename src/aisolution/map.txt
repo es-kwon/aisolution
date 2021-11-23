@@ -1,0 +1,55 @@
+Class
+1. public class Customer
+	1) field
+		- int age
+		- String gender
+		- String location
+		- int spentTime
+	
+	2) method
+		- getAge
+		- setAge
+		- getGender
+		- setGender
+		- getSpentTime
+		- setSpentTime
+		- toString
+		
+2. public class Customers
+	1) field
+		- Customer[] customerArr
+		
+	2) method
+		- getCustomerArr
+		- setCustomerArr
+		- toString
+		
+3. public class Parameter
+	1) field
+		// 기준들
+		- int minAge
+		- int maxAge
+		- String gender
+		- String location
+		- int spentTime
+		
+	2) method
+		- getMinAge
+		- setMinAge
+		- getGender
+		- setGender
+		- getSpentTime
+		- setSpentTime
+		- toString
+		
+4. public class Parameters
+	1) field
+		- Parameter[] parameterArr
+		
+	2) method
+		- getParameterArr
+		- setParameterArr
+
+5. public class Main
+	1) method
+		-
