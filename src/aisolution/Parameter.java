@@ -10,10 +10,13 @@ public class Parameter {
 	private GroupType groupType;
 	private String parameter;
 	private int numofcustomers;
+	private int alreadySet;
 	
 	// constructor
 	public Parameter(GroupType g) {
 		this.groupType = g;
+		this.gender = "null";
+		this.location = "null";
 	}
 
 	// getter, setter
@@ -77,6 +80,14 @@ public class Parameter {
 		return numofcustomers;
 	}
 
+	public int getAlreadySet() {
+		return alreadySet;
+	}
+
+	public void setAlreadySet(int alreadySet) {
+		this.alreadySet = alreadySet;
+	}
+
 	public void setNumofCustomers(Customer[] p) {
 		int count = 0;
 		for(int i = 0; i < p.length; i++) {
@@ -98,6 +109,8 @@ public class Parameter {
 	}
 	
 	public boolean classification (Customer c) {
+		if(c.getGender() == null) c.setGender("null");
+		if(c.getLocation() == null) c.setLocation("null");
 		return (c.getAge() >= this.getMinAge()
 				&& c.getAge() <= this.getMaxAge())
 				&& c.getGender().equals(this.getGender())
@@ -105,7 +118,7 @@ public class Parameter {
 				&& c.getSpentTime() == this.getSpentTime();
 	}
 	
-	public boolean checkString(String s) {
+	public boolean checkGT(String s) {
 		return this.getGroupType().toString().equals(s.toUpperCase());
 	}
 	

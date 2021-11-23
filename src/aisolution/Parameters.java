@@ -21,19 +21,22 @@ public class Parameters {
 	}
 	
 	public boolean classification (Customer c) {
-		return this.parameterArr[0].classification(c)
-				&& this.parameterArr[1].classification(c)
-				&& this.parameterArr[2].classification(c);
+		boolean[] x = new boolean[3];
+		for (int i = 0; i < 3; i++) {
+			x[i] = this.parameterArr[i].classification(c);
+			if (this.parameterArr[i].getAlreadySet() == 0) x[i] = false;
+		}
+		return x[0] || x[1] || x[2];
 	}
 	
-	public boolean checkString(int x, String s) {
-		return this.parameterArr[x].checkString(s);
+	public boolean checkGT(int x, String s) {
+		return this.parameterArr[x].checkGT(s);
 	}
 	
-	public boolean notCheckString(String s) {
-		return !(this.parameterArr[0].checkString(s) 
-				|| this.parameterArr[1].checkString(s) 
-				|| this.parameterArr[2].checkString(s));
+	public boolean checkNotAll(String s) {
+		return !(this.parameterArr[0].checkGT(s) 
+				|| this.parameterArr[1].checkGT(s) 
+				|| this.parameterArr[2].checkGT(s));
 	}
 	
 	public int getArrLength() {

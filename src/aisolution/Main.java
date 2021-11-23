@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 	static Scanner sc = new Scanner(System.in);
-	
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("======================");
@@ -12,8 +12,8 @@ public class Main {
 		System.out.println("======================");
 		System.out.println();
 		System.out.println();
-		
-		while(true) {
+
+		while (true) {
 			System.out.println("======================");
 			System.out.println(" 1.   Set Customer Paramer");
 			System.out.println(" 2.   Enter Customer Data");
@@ -26,28 +26,26 @@ public class Main {
 
 			if (userInputNum == 1) {
 				setCustomerParameter();
-			} 
-			else if (userInputNum == 2) {
+			} else if (userInputNum == 2) {
 				enterCustomerData();
-			} 
-			else if (userInputNum == 3) {
+			} else if (userInputNum == 3) {
 				summary();
-			} 
-			else if (userInputNum == 4) {
+			} else if (userInputNum == 4) {
 				return;
 			}
-			
+
 		}
-		
+
 	}
-	
+
 	// Set Customer Parameter
 	static Parameter ideal = new Parameter(GroupType.IDEAL);
 	static Parameter likely = new Parameter(GroupType.LIKELY);
 	static Parameter defect = new Parameter(GroupType.DEFECT);
 	static Parameters parameters = new Parameters(ideal, likely, defect);
+
 	static void setCustomerParameter() {
-		while(true) {
+		while (true) {
 			System.out.println("======================");
 			System.out.println(" 1.   Set Parameter");
 			System.out.println(" 2.   View Parameter");
@@ -59,19 +57,16 @@ public class Main {
 			System.out.println();
 			if (userInputNum == 1) {
 				setParameter();
-			} 
-			else if (userInputNum == 2) {
+			} else if (userInputNum == 2) {
 				viewParameter();
-			} 
-			else if (userInputNum == 3) {
+			} else if (userInputNum == 3) {
 				editParameter();
-			} 
-			else if (userInputNum == 4) {
+			} else if (userInputNum == 4) {
 				return;
 			}
 		}
 	}
-	
+
 	// Set Prameter
 	static void setParameter() {
 		while (true) {
@@ -79,19 +74,18 @@ public class Main {
 			System.out.print("which group (ideal, likely, defect)? ");
 			String temp = sc.next();
 			System.out.println();
-			
+
 			if (temp.equals("end")) {
 				return;
-			} 
-			else if(parameters.notCheckString(temp)) {
+			} else if (parameters.checkNotAll(temp)) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
 			}
-			
-			for(int i = 0; i < parameters.getArrLength(); i++) {
-				if(parameters.checkString(i, temp)) {
-					if(parameters.getParameter(i) != null) {
+
+			for (int i = 0; i < parameters.getArrLength(); i++) {
+				if (parameters.checkGT(i, temp)) {
+					if (parameters.getParameter(i) != null) {
 						System.out.printf("%s group already exists.\n", parameters.getGroupType(i));
 						System.out.println();
 						System.out.printf("GroupType : %s\n", parameters.getGroupType(i));
@@ -99,32 +93,32 @@ public class Main {
 						continue;
 					}
 					inputParameter(parameters.parameterArr[i]);
+					parameters.parameterArr[i].setAlreadySet(1);
 				}
 			}
 
-		}	
-	
+		}
+
 	}
-	
+
 	static void editParameter() {
 		while (true) {
 			System.out.println("** Pres 'end', if you want to exit! **");
 			System.out.print("which group (ideal, likely, defect)? ");
 			String temp = sc.next();
 			System.out.println();
-			
+
 			if (temp.equals("end")) {
 				return;
-			} 
-			else if(parameters.notCheckString(temp)) {
+			} else if (parameters.checkNotAll(temp)) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
 			}
-			
-			for(int i = 0; i < parameters.getArrLength(); i++) {
-				if(parameters.checkString(i, temp)) {
-					if(parameters.getParameter(i)== null) {
+
+			for (int i = 0; i < parameters.getArrLength(); i++) {
+				if (parameters.checkGT(i, temp)) {
+					if (parameters.getParameter(i) == null) {
 						System.out.println("No parameter. Set the parameter first.");
 						System.out.println();
 						continue;
@@ -135,7 +129,7 @@ public class Main {
 
 		}
 	}
-	
+
 	static void inputParameter(Parameter p) {
 		while (true) {
 			System.out.println("======================");
@@ -148,38 +142,36 @@ public class Main {
 			System.out.print("Choose One : ");
 			userInputNum = sc.nextInt();
 			System.out.println();
-			if(userInputNum == 5) return;
+			if (userInputNum == 5)
+				return;
 			inputParameterData(p, userInputNum);
 		}
 	}
-	
+
 	static void inputParameterData(Parameter p, int x) {
 		if (x == 1) {
 			System.out.print("Input Minimum Age : ");
 			p.setMinAge(sc.nextInt());
-			
+
 			System.out.print("Input Maximum Age : ");
 			p.setMaxAge(sc.nextInt());
 			System.out.println();
-		} 
-		else if (x == 2) {
+		} else if (x == 2) {
 			System.out.print("Intput Gender : ");
-			p.setGender(sc.next());
+			p.setGender(sc.next().toLowerCase());
 			System.out.println();
-		} 
-		else if (x == 3) {
+		} else if (x == 3) {
 			System.out.print("Intput Location : ");
-			p.setLocation(sc.next());
+			p.setLocation(sc.next().toLowerCase());
 			System.out.println();
-		} 
-		else if (x == 4) {
+		} else if (x == 4) {
 			System.out.print("Intput Online Spent Time : ");
 			p.setSpentTime(sc.nextInt());
 			System.out.println();
 		}
 		p.setParameter();
 	}
-	
+
 	// View Parameter
 	static void viewParameter() {
 		while (true) {
@@ -187,29 +179,29 @@ public class Main {
 			System.out.print("which group (ideal, likely, defect)? ");
 			String temp = sc.next();
 			System.out.println();
-			
+
 			if (temp.equals("end")) {
 				return;
-			} 
-			else if(parameters.notCheckString(temp)) {
+			} else if (parameters.checkNotAll(temp)) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
 			}
 
-			for(int i = 0; i < parameters.getArrLength(); i++) {
-				if(parameters.checkString(i, temp)) {
+			for (int i = 0; i < parameters.getArrLength(); i++) {
+				if (parameters.checkGT(i, temp)) {
 					System.out.printf("GroupType : %s\n", parameters.getGroupType(i));
 					System.out.printf("Prameter : %s\n", parameters.getParameter(i));
 					System.out.println();
 				}
 			}
-			
-		}	
+
+		}
 	}
-	
+
 	// Enter Customer Data
 	static int userInputNum = 0;
+
 	static void enterCustomerData() {
 		while (true) {
 			System.out.println("======================");
@@ -224,17 +216,14 @@ public class Main {
 
 			if (userInputNum == 1) {
 				setCustomerData();
-				if(allofCustomers.getArrLength() != 0) {
+				if (allofCustomers.getArrLength() != 0) {
 					classification();
-					}
-			} 
-			else if (userInputNum == 2) {
+				}
+			} else if (userInputNum == 2) {
 				viewCustomerData();
-			} 
-			else if (userInputNum == 3) {
+			} else if (userInputNum == 3) {
 				editCostomerData();
-			} 
-			else if (userInputNum == 4) {
+			} else if (userInputNum == 4) {
 				return;
 			}
 		}
@@ -244,15 +233,17 @@ public class Main {
 	static Customers allofCustomers = new Customers();
 	static int numofCustomers = 0;
 	static int oldNum = 0;
+
 	static void setCustomerData() {
 //		allofCustomers.setArrLength(numofCustomers); // 배열길이 초기화
 		System.out.println("** Press -1, if you want to exit! **");
 		System.out.print("How many customers to input? ");
 		userInputNum = sc.nextInt();
 		System.out.println();
-		if(userInputNum == - 1) return;
+		if (userInputNum == -1)
+			return;
 		numofCustomers += userInputNum; // 유저입력
-		
+
 		allofCustomers.init(numofCustomers); // 새배열 생성 + 배열 복사
 		allofCustomers.createCustomer(oldNum, numofCustomers);
 		for (int i = oldNum; i < numofCustomers; i++) {
@@ -261,7 +252,7 @@ public class Main {
 		oldNum = numofCustomers;
 		allofCustomers.setArrLength(numofCustomers);
 	}
-	
+
 	static void selectSetData(int x) {
 		while (true) {
 			System.out.printf("====== Customer %d Info. ======\n", x + 1);
@@ -281,12 +272,12 @@ public class Main {
 			inputCostomerData(x, userInputNum);
 		}
 	}
-	
-	
+
 	// View Customer Data
 	static Customer[] copyCustomerArr;
+
 	static void viewCustomerData() {
-		if(numofCustomers == 0) {
+		if (numofCustomers == 0) {
 			System.out.println("No customer. Set customer data first.");
 			System.out.println();
 			return;
@@ -295,10 +286,10 @@ public class Main {
 		allofCustomers.viewCustomerData();
 		System.out.println();
 	}
-	
+
 	// Edit Customer Data
 	static void editCostomerData() {
-		if(numofCustomers == 0) {
+		if (numofCustomers == 0) {
 			System.out.println("No customer. Set customer data first.");
 			System.out.println();
 			return;
@@ -309,49 +300,56 @@ public class Main {
 		System.out.println();
 		selectSetData(temp - 1);
 	}
-	
+
 	static void inputCostomerData(int x, int y) {
 		if (y == 1) {
-			System.out.print("Intput Age : ");
-			allofCustomers.setAge(x, sc.nextInt());
-			System.out.println();
-		} 
-		else if (y == 2) {
+			while (true) {
+				System.out.print("Intput Age : ");
+				int temp = sc.nextInt();
+				if ((temp >= 0) && (temp <= 100)) {
+					allofCustomers.setAge(x, temp);
+					System.out.println();
+				} else {
+					System.out.println("");
+					System.out.println();
+				}
+			}
+		} else if (y == 2) {
 			System.out.print("Intput Gender : ");
-			allofCustomers.setGender(x, sc.next());
+			allofCustomers.setGender(x, sc.next().toLowerCase());
 			System.out.println();
-		} 
-		else if (y == 3) {
+		} else if (y == 3) {
 			System.out.print("Intput Location : ");
-			allofCustomers.setLocation(x, sc.next());
+			allofCustomers.setLocation(x, sc.next().toLowerCase());
 			System.out.println();
-		} 
-		else if (y == 4) {
+		} else if (y == 4) {
 			System.out.print("Intput Online Spent Time : ");
 			allofCustomers.setSpentTime(x, sc.nextInt());
 			System.out.println();
 		}
 	}
-	
+
 	// Summary
 	static Customers idealGroup = new Customers(ideal, GroupType.IDEAL);
 	static Customers likelyGroup = new Customers(likely, GroupType.LIKELY);
 	static Customers defectGroup = new Customers(defect, GroupType.DEFECT);
-	static Customers others = new Customers();
-	
+	static Customers others = new Customers(GroupType.NONE);
+
 	static void classification() {
-		idealGroup.creatCustomerArr(allofCustomers);
-		likelyGroup.creatCustomerArr(allofCustomers);
-		defectGroup.creatCustomerArr(allofCustomers);
+		if (ideal.getAlreadySet() != 0)
+			idealGroup.creatCustomerArr(allofCustomers);
+		if (likely.getAlreadySet() != 0)
+			likelyGroup.creatCustomerArr(allofCustomers);
+		if (defect.getAlreadySet() != 0)
+			defectGroup.creatCustomerArr(allofCustomers);
 		others.creatCustomerArr(allofCustomers, parameters);
 	}
-	
+
 	static void summary() {
 		idealGroup.summary();
 		likelyGroup.summary();
 		defectGroup.summary();
 		others.summary();
 	}
-
 
 }

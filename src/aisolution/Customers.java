@@ -8,6 +8,11 @@ public class Customers {
 	private GroupType groupType;
 	
 	// constructor
+	public Customers(GroupType groupType) {
+		this.arrLength = 0;
+		this.customerArr = null;
+		this.groupType = groupType;
+	}
 	public Customers() {
 		this.arrLength = 0;
 		this.customerArr = null;
@@ -106,11 +111,12 @@ public class Customers {
 			}
 		}
 		this.setCustomerArr(new Customer[count]);
+		this.arrLength = count;
 		int groupIdx = 0;
 		for (int i = 0; i < c.getArrLength(); i++) {
 			if (!(p.classification(c.getCustomerArr()[i]))) {
 				this.getCustomerArr()[groupIdx++] = c.getCustomerArr()[i];
-				c.getCustomerArr()[i].setGroupType(GroupType.NONE);
+				c.getCustomerArr()[i].setGroupType(this.groupType);
 			}
 		}
 	}
