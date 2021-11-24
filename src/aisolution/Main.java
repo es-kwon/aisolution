@@ -1,8 +1,8 @@
 package aisolution;
 
-import java.util.Scanner;
+import java.util.*;
 
-public class Main {
+public class Main implements HandleException {
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -21,19 +21,23 @@ public class Main {
 			System.out.println(" 4.   Quit");
 			System.out.println("======================");
 			System.out.print("Choose One : ");
-			userInputNum = sc.nextInt();
+			userInputNum = sc.next();
 			System.out.println();
 
-			if (userInputNum == 1) {
+			if (userInputNum.equals("1")) {
 				setCustomerParameter();
-			} else if (userInputNum == 2) {
+			} else if (userInputNum.equals("2")) {
 				enterCustomerData();
-			} else if (userInputNum == 3) {
+			} else if (userInputNum.equals("3")) {
 				summary();
-			} else if (userInputNum == 4) {
+			} else if (userInputNum.equals("4")) {
+				System.out.println("Program Finished.");
 				return;
+			} else {
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+				continue;
 			}
-			
 
 		}
 
@@ -54,22 +58,26 @@ public class Main {
 			System.out.println(" 4.   Back");
 			System.out.println("======================");
 			System.out.print("Choose One : ");
-			userInputNum = sc.nextInt();
+			userInputNum = sc.next();
 			System.out.println();
-			if (userInputNum == 1) {
+			if (userInputNum.equals("1")) {
 				setParameter();
 				if (allofCustomers.getArrLength() != 0) {
 					classification();
 				}
-			} else if (userInputNum == 2) {
+			} else if (userInputNum.equals("2")) {
 				viewParameter();
-			} else if (userInputNum == 3) {
+			} else if (userInputNum.equals("3")) {
 				editParameter();
 				if (allofCustomers.getArrLength() != 0) {
 					classification();
 				}
-			} else if (userInputNum == 4) {
+			} else if (userInputNum.equals("4")) {
 				return;
+			} else {
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+				continue;
 			}
 		}
 	}
@@ -86,7 +94,7 @@ public class Main {
 				return;
 			}
 			// ideal, likely, defect, end 이외의 값이 들어오면 컨티뉴
-			else if (parameters.checkNotAll(temp)) { 
+			else if (parameters.checkNotAll(temp)) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
@@ -149,34 +157,92 @@ public class Main {
 			System.out.println(" 5.  Back");
 			System.out.println("======================");
 			System.out.print("Choose One : ");
-			userInputNum = sc.nextInt();
+			userInputNum = sc.next();
 			System.out.println();
-			if (userInputNum == 5)
+			if (userInputNum.equals("5"))
 				return;
-			inputParameterData(p, userInputNum);
+			else if (userInputNum.equals("1") || userInputNum.equals("2") || userInputNum.equals("3")
+					|| userInputNum.equals("4"))
+				inputParameterData(p, Integer.parseInt(userInputNum));
+			else {
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+				continue;
+			}
 		}
 	}
 
 	static void inputParameterData(Parameter p, int x) {
 		if (x == 1) {
-			System.out.print("Input Minimum Age : ");
-			p.setMinAge(sc.nextInt());
+			while (true) {
+				try {
+					System.out.print("Input Minimum Age : ");
+					userInput = sc.nextInt();
+					if (!((userInput >= 0) && (userInput <= 100))) {
+						System.out.println();
+						System.out.println("Invalid Input. Please try again.");
+						System.out.println();
+						continue;
+					}
+					p.setMinAge(userInput);
 
-			System.out.print("Input Maximum Age : ");
-			p.setMaxAge(sc.nextInt());
-			System.out.println();
+					System.out.print("Input Maximum Age : ");
+					userInput = sc.nextInt();
+					if (!((userInput >= 0) && (userInput <= 100))) {
+						System.out.println();
+						System.out.println("Invalid Input. Please try again.");
+						System.out.println();
+						continue;
+					}
+					p.setMaxAge(userInput);
+					System.out.println();
+					break;
+				} catch (InputMismatchException e) {
+					sc.next();
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+				}
+			}
 		} else if (x == 2) {
-			System.out.print("Intput Gender : ");
-			p.setGender(sc.next().toLowerCase());
-			System.out.println();
+			while (true) {
+				System.out.print("Intput Gender : ");
+				String temp = sc.next().toLowerCase();
+				if (!(temp.equals("male") || temp.equals("female"))) {
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+					continue;
+				}
+				p.setGender(temp);
+				System.out.println();
+				break;
+			}
 		} else if (x == 3) {
 			System.out.print("Intput Location : ");
 			p.setLocation(sc.next().toLowerCase());
 			System.out.println();
 		} else if (x == 4) {
-			System.out.print("Intput Online Spent Time : ");
-			p.setSpentTime(sc.nextInt());
-			System.out.println();
+			while (true) {
+				try {
+					System.out.print("Intput Online Spent Time : ");
+					userInput = sc.nextInt();
+					if (userInput < 0) {
+						System.out.println();
+						System.out.println("Invalid Input. Please try again.");
+						System.out.println();
+						continue;
+					}
+					p.setSpentTime(userInput);
+					System.out.println();
+					break;
+				} catch (InputMismatchException e) {
+					sc.next();
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+				}
+			}
 		}
 		p.setParameter();
 	}
@@ -209,7 +275,7 @@ public class Main {
 	}
 
 	// Enter Customer Data
-	static int userInputNum = 0;
+	static String userInputNum = "";
 
 	static void enterCustomerData() {
 		while (true) {
@@ -220,24 +286,29 @@ public class Main {
 			System.out.println(" 4.   Back");
 			System.out.println("======================");
 			System.out.print("Choose One : ");
-			userInputNum = sc.nextInt();
+			userInputNum = sc.next();
 			System.out.println();
 
-			if (userInputNum == 1) {
+			if (userInputNum.equals("1")) {
 				setCustomerData();
 				if (allofCustomers.getArrLength() != 0) {
 					classification();
 				}
-			} else if (userInputNum == 2) {
+			} else if (userInputNum.equals("2")) {
 				viewCustomerData();
-			} else if (userInputNum == 3) {
+			} else if (userInputNum.equals("3")) {
 				editCostomerData();
 				if (allofCustomers.getArrLength() != 0) {
 					classification();
 				}
-			} else if (userInputNum == 4) {
+			} else if (userInputNum.equals("4")) {
 				return;
+			} else {
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+				continue;
 			}
+
 		}
 	}
 
@@ -245,24 +316,39 @@ public class Main {
 	static Customers allofCustomers = new Customers();
 	static int numofCustomers = 0;
 	static int oldNum = 0;
+	static int userInput = 0;
 
 	static void setCustomerData() {
-//		allofCustomers.setArrLength(numofCustomers); // 배열길이 초기화
-		System.out.println("** Press -1, if you want to exit! **");
-		System.out.print("How many customers to input? ");
-		userInputNum = sc.nextInt();
-		System.out.println();
-		if (userInputNum == -1)
-			return;
-		numofCustomers += userInputNum; // 유저입력
-
-		allofCustomers.init(numofCustomers); // 새배열 생성 + 배열 복사
-		allofCustomers.createCustomer(oldNum, numofCustomers);
-		for (int i = oldNum; i < numofCustomers; i++) {
-			selectSetData(i);
+		while (true) {
+			try {
+				System.out.println("** Press -1, if you want to exit! **");
+				System.out.print("How many customers to input? ");
+				userInput = sc.nextInt();
+				System.out.println();
+				if (userInput == -1)
+					return;
+				else if (userInput < 0) {
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+					continue;
+				}
+				numofCustomers += userInput; // 유저입력
+				allofCustomers.init(numofCustomers); // 새배열 생성 + 배열 복사
+				allofCustomers.createCustomer(oldNum, numofCustomers);
+				for (int i = oldNum; i < numofCustomers; i++) {
+					selectSetData(i);
+				}
+				oldNum = numofCustomers;
+				allofCustomers.setArrLength(numofCustomers);
+				break;
+			} catch (InputMismatchException e) {
+				sc.next();
+				System.out.println();
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+			}
 		}
-		oldNum = numofCustomers;
-		allofCustomers.setArrLength(numofCustomers);
 	}
 
 	static void selectSetData(int x) {
@@ -277,11 +363,18 @@ public class Main {
 			System.out.println(" 5.  Back");
 			System.out.println("======================");
 			System.out.print("Choose One : ");
-			userInputNum = sc.nextInt();
+			userInputNum = sc.next();
 			System.out.println();
-			if (userInputNum == 5)
+			if (userInputNum.equals("5"))
 				return;
-			inputCostomerData(x, userInputNum);
+			else if (userInputNum.equals("1") || userInputNum.equals("2") || userInputNum.equals("3")
+					|| userInputNum.equals("4"))
+				inputCostomerData(x, Integer.parseInt(userInputNum));
+			else {
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+				continue;
+			}
 		}
 	}
 
@@ -316,28 +409,65 @@ public class Main {
 	static void inputCostomerData(int x, int y) {
 		if (y == 1) {
 			while (true) {
-				System.out.print("Intput Age : ");
-				int temp = sc.nextInt();
-				if ((temp >= 0) && (temp <= 100)) {
-					allofCustomers.setAge(x, temp);
+				try {
+					System.out.print("Intput Age : ");
+					userInput = sc.nextInt();
+					if (!((userInput >= 0) && (userInput <= 100))) {
+						System.out.println();
+						System.out.println("Invalid Input. Please try again.");
+						System.out.println();
+						continue;
+					}
+					allofCustomers.setAge(x, userInput);
 					System.out.println();
-				} else {
-					System.out.println("");
+					break;
+				} catch (InputMismatchException e) {
+					sc.next();
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
 					System.out.println();
 				}
 			}
 		} else if (y == 2) {
-			System.out.print("Intput Gender : ");
-			allofCustomers.setGender(x, sc.next().toLowerCase());
-			System.out.println();
+			while (true) {
+				System.out.print("Intput Gender : ");
+				String temp = sc.next().toLowerCase();
+				if (!(temp.equals("male") || temp.equals("female"))) {
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+					continue;
+				}
+				allofCustomers.setGender(x, temp);
+				System.out.println();
+				break;
+			}
 		} else if (y == 3) {
 			System.out.print("Intput Location : ");
 			allofCustomers.setLocation(x, sc.next().toLowerCase());
 			System.out.println();
 		} else if (y == 4) {
-			System.out.print("Intput Online Spent Time : ");
-			allofCustomers.setSpentTime(x, sc.nextInt());
-			System.out.println();
+			while (true) {
+				try {
+					System.out.print("Intput Online Spent Time : ");
+					userInput = sc.nextInt();
+					if (userInput < 0) {
+						System.out.println();
+						System.out.println("Invalid Input. Please try again.");
+						System.out.println();
+						continue;
+					}
+					allofCustomers.setSpentTime(x, userInput);
+					System.out.println();
+					break;
+				} catch (InputMismatchException e) {
+					sc.next();
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+				}
+			}
+			
 		}
 	}
 
