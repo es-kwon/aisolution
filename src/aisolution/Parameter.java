@@ -10,7 +10,6 @@ public class Parameter {
 	private GroupType groupType;
 	private String parameter;
 	private int numofcustomers;
-	private int alreadySet;
 	
 	// constructor
 	public Parameter(GroupType g) {
@@ -79,15 +78,7 @@ public class Parameter {
 	public int getNumofCustomers() {
 		return numofcustomers;
 	}
-
-	public int getAlreadySet() {
-		return alreadySet;
-	}
-
-	public void setAlreadySet(int alreadySet) {
-		this.alreadySet = alreadySet;
-	}
-
+	
 	public void setNumofCustomers(Customer[] p) {
 		int count = 0;
 		for(int i = 0; i < p.length; i++) {

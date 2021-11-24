@@ -33,6 +33,7 @@ public class Main {
 			} else if (userInputNum == 4) {
 				return;
 			}
+			
 
 		}
 
@@ -57,10 +58,16 @@ public class Main {
 			System.out.println();
 			if (userInputNum == 1) {
 				setParameter();
+				if (allofCustomers.getArrLength() != 0) {
+					classification();
+				}
 			} else if (userInputNum == 2) {
 				viewParameter();
 			} else if (userInputNum == 3) {
 				editParameter();
+				if (allofCustomers.getArrLength() != 0) {
+					classification();
+				}
 			} else if (userInputNum == 4) {
 				return;
 			}
@@ -75,9 +82,11 @@ public class Main {
 			String temp = sc.next();
 			System.out.println();
 
-			if (temp.equals("end")) {
+			if (temp.equals("end")) { // end 입력시 종료
 				return;
-			} else if (parameters.checkNotAll(temp)) {
+			}
+			// ideal, likely, defect, end 이외의 값이 들어오면 컨티뉴
+			else if (parameters.checkNotAll(temp)) { 
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
@@ -90,10 +99,10 @@ public class Main {
 						System.out.println();
 						System.out.printf("GroupType : %s\n", parameters.getGroupType(i));
 						System.out.printf("Parameter : %s\n", parameters.getParameter(i));
+						System.out.println();
 						continue;
 					}
 					inputParameter(parameters.parameterArr[i]);
-					parameters.parameterArr[i].setAlreadySet(1);
 				}
 			}
 
@@ -223,6 +232,9 @@ public class Main {
 				viewCustomerData();
 			} else if (userInputNum == 3) {
 				editCostomerData();
+				if (allofCustomers.getArrLength() != 0) {
+					classification();
+				}
 			} else if (userInputNum == 4) {
 				return;
 			}
@@ -336,11 +348,11 @@ public class Main {
 	static Customers others = new Customers(GroupType.NONE);
 
 	static void classification() {
-		if (ideal.getAlreadySet() != 0)
+		if (ideal.getParameter() != null)
 			idealGroup.creatCustomerArr(allofCustomers);
-		if (likely.getAlreadySet() != 0)
+		if (likely.getParameter() != null)
 			likelyGroup.creatCustomerArr(allofCustomers);
-		if (defect.getAlreadySet() != 0)
+		if (defect.getParameter() != null)
 			defectGroup.creatCustomerArr(allofCustomers);
 		others.creatCustomerArr(allofCustomers, parameters);
 	}

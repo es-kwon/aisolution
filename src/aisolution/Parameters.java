@@ -24,7 +24,7 @@ public class Parameters {
 		boolean[] x = new boolean[3];
 		for (int i = 0; i < 3; i++) {
 			x[i] = this.parameterArr[i].classification(c);
-			if (this.parameterArr[i].getAlreadySet() == 0) x[i] = false;
+			if (this.parameterArr[i].getParameter() == null) x[i] = false;
 		}
 		return x[0] || x[1] || x[2];
 	}
