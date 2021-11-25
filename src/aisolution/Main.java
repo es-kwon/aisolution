@@ -399,11 +399,28 @@ public class Main implements HandleException {
 			System.out.println();
 			return;
 		}
-		viewCustomerData();
-		System.out.printf("Which customer do you want to edit ( 1 ~ %d )? ", allofCustomers.getArrLength());
-		int temp = sc.nextInt();
-		System.out.println();
-		selectSetData(temp - 1);
+		while (true) {
+			try {
+				viewCustomerData();
+				System.out.printf("Which customer do you want to edit ( 1 ~ %d )? ", allofCustomers.getArrLength());
+				int temp = sc.nextInt();
+				System.out.println();
+				if (temp >= 1 && temp <= allofCustomers.getArrLength()) {
+					selectSetData(temp - 1);
+					break;
+				} else {
+					System.out.println();
+					System.out.println("Invalid Input. Please try again.");
+					System.out.println();
+					continue;
+				}
+			} catch (InputMismatchException e) {
+				sc.next();
+				System.out.println();
+				System.out.println("Invalid Input. Please try again.");
+				System.out.println();
+			}
+		}
 	}
 
 	static void inputCostomerData(int x, int y) {
@@ -467,7 +484,7 @@ public class Main implements HandleException {
 					System.out.println();
 				}
 			}
-			
+
 		}
 	}
 
