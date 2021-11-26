@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>6</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>402</x>
+      <y>66</y>
+      <w>312</w>
+      <h>294</h>
+    </coordinates>
+    <panel_attributes>aisolution::Main
+--
+~sc = new Scanner(System.in): Scanner
+~ideal = new Parameter(GroupType.IDEAL): Parameter
+~likely = new Parameter(GroupType.LIKELY): Parameter
+~defect = new Parameter(GroupType.DEFECT): Parameter
+~parameters = new Parameters(ideal, likely, defect): Parameters
+~userInputNum = "": String
+~allofCustomers = new Customers(): Customers
+~numofCustomers = 0: int
+~oldNum = 0: int
+~userInput = 0: int
+~idealGroup = new Customers(ideal, GroupType.IDEAL): Customers
+~likelyGroup = new Customers(likely, GroupType.LIKELY): Customers
+~defectGroup = new Customers(defect, GroupType.DEFECT): Customers
+~others = new Customers(GroupType.NONE): Customers
+--
++main(String[] args): void
+~setCustomerParameter(): void
+~setParameter(): void
+~editParameter(): void
+~inputParameter(Parameter p): void
+~inputParameterData(Parameter p, int x): void
+~viewParameter(): void
+~enterCustomerData(): void
+~setCustomerData(): void
+~selectSetData(int x): void
+~viewCustomerData(): void
+~editCustomerData(): void
+~inputCustomerData(int x, int y): void
+~classification(): void
+~summary(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>828</x>
+      <y>390</y>
+      <w>192</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>aisolution::Customer
+--
+-age: int
+-gender: String
+-location: String
+-spentTime: int
+-groupType: GroupType
+--
++Customer(): ctor
++getAge(): int
++setAge(int age): void
++getGender(): String
++setGender(String gender): void
++getLocation(): String
++setLocation(String location): void
++getSpentTime(): int
++setSpentTime(int spentTime): void
++getGroupType(): GroupType
++setGroupType(GroupType groupType): void
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>816</x>
+      <y>78</y>
+      <w>270</w>
+      <h>246</h>
+    </coordinates>
+    <panel_attributes>aisolution::Customers
+--
+-customerArr: Customer[]
+-arrLength: int
+-parameter: Parameter
+-groupType: GroupType
+--
++Customers(GroupType groupType): ctor
++Customers(): ctor
++Customers(Parameter parameter, GroupType groupType): ctor
++getCustomerArr(): Customer[]
++setCustomerArr(Customer[] customerArr): void
++getArrLength(): int
++setArrLength(int arrLength): void
++init(int x): void
++createCustomer(int x, int y): void
++setAge(int x, int y): void
++setGender(int x, String y): void
++setLocation(int x, String y): void
++setSpentTime(int x, int y): void
++getParameter(): Parameter
++setParameter(Parameter parameter): void
++editCostomerData(int x, int y): void
++creatCustomerArr(Customers c): void
++creatCustomerArr(Customers c, Parameters p): void
++summary(): void
++viewCustomerData(): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>48</x>
+      <y>318</y>
+      <w>192</w>
+      <h>294</h>
+    </coordinates>
+    <panel_attributes>aisolution::Parameter
+--
+-minAge: int
+-maxAge: int
+-gender: String
+-location: String
+-spentTime: int
+-groupType: GroupType
+-parameter: String
+-numofcustomers: int
+--
++Parameter(GroupType g): ctor
++getMinAge(): int
++setMinAge(int minAge): void
++getMaxAge(): int
++setMaxAge(int maxAge): void
++getGender(): String
++setGender(String gender): void
++getLocation(): String
++setLocation(String location): void
++getSpentTime(): int
++setSpentTime(int spentTime): void
++getGroupType(): GroupType
++setGroupType(GroupType groupType): void
++setParameter(): void
++getParameter(): String
++getNumofCustomers(): int
++setNumofCustomers(Customer[] p): void
++printCustomers(Customer[] p): void
++classification(Customer c): boolean
++checkGT(String s): boolean
++toString(): String
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>18</x>
+      <y>84</y>
+      <w>300</w>
+      <h>114</h>
+    </coordinates>
+    <panel_attributes>aisolution::Parameters
+--
+~parameterArr: Parameter[]
+--
++Parameters(Parameter ideal, Parameter likely, Parameter defect): ctor
++getParameterArr(): Parameter[]
++setParameterArr(Parameter[] parameterArr): void
++classification(Customer c): boolean
++checkGT(int x, String s): boolean
++checkNotAll(String s): boolean
++getArrLength(): int
++getParameter(int x): String
++getGroupType(int x): GroupType
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>234</x>
+      <y>492</y>
+      <w>606</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>990.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>234</x>
+      <y>306</y>
+      <w>180</w>
+      <h>174</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;270.0;280.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>708</x>
+      <y>306</y>
+      <w>132</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>200.0;190.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>708</x>
+      <y>132</y>
+      <w>120</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>180.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>312</x>
+      <y>132</y>
+      <w>102</w>
+      <h>18</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;150.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>150</x>
+      <y>192</y>
+      <w>30</w>
+      <h>138</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;210.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>930</x>
+      <y>318</y>
+      <w>30</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
