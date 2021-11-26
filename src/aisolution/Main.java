@@ -56,13 +56,13 @@ public class Main implements HandleException {
 	// #######################################
 
 	// 기준별 객체 및 기준그룹 객체 배열 생성
-	static Parameter ideal = new Parameter(GroupType.IDEAL);
-	static Parameter likely = new Parameter(GroupType.LIKELY);
-	static Parameter defect = new Parameter(GroupType.DEFECT);
+	static Parameter ideal;
+	static Parameter likely;
+	static Parameter defect;
 	static Parameters parameters = new Parameters(ideal, likely, defect);
 
 	static String userInputNum = ""; // user가 입력한 값
-	
+
 	static void setCustomerParameter() {
 		while (true) {
 			System.out.println("======================");
@@ -76,20 +76,10 @@ public class Main implements HandleException {
 			System.out.println();
 			if (userInputNum.equals("1")) {
 				setParameter();
-				// Parameter 설정 완료 후 모든 Customer 분류
-				// Customer의 수가 0일때는 실시하지 않음
-				if (allofCustomers.getArrLength() != 0) {
-					classification();
-				}
 			} else if (userInputNum.equals("2")) {
 				viewParameter();
 			} else if (userInputNum.equals("3")) {
 				editParameter();
-				// Parameter 수정 완료 후 모든 Customer 분류
-				// Customer의 수가 0일때는 실시하지 않음
-				if (allofCustomers.getArrLength() != 0) {
-					classification();
-				}
 			} else if (userInputNum.equals("4")) {
 				return;
 			} else {
@@ -111,36 +101,38 @@ public class Main implements HandleException {
 		while (true) {
 			System.out.println("** Pres 'end', if you want to exit! **");
 			System.out.print("which group (ideal, likely, defect)? ");
-			String temp = sc.next();
+			// 유저 입력
+			String temp = sc.next().toLowerCase();
 			System.out.println();
-
+			
 			if (temp.equals("end")) { // end 입력시 종료
 				return;
 			}
 			// ideal, likely, defect, end 이외의 값이 들어오면 continue
-			else if (parameters.checkNotAll(temp)) {
+			else if ((!(temp.equals("ideal") || temp.equals("likely") || temp.equals("defect")))) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
 			}
+			
+			// GroupType 중 유저입력값 찾아 임시저장
+			GroupType gtTemp = GroupType.valueOf(temp.toUpperCase());
+			// GroupType 인덱스 임시저장
+			int intTemp = gtTemp.ordinal();
 
-			// Parameter 이름들과 User 입력한 값 비교
-			for (int i = 0; i < parameters.getArrLength(); i++) {
-				if (parameters.checkGT(i, temp)) {
-					// 선택한 Parameter가 이미 설정되어있는지 확인
-					// 설정되어있으면 다음 내용 출력 후 continue
-					if (parameters.getParameter(i) != null) {
-						System.out.printf("%s group already exists.\n", parameters.getGroupType(i));
-						System.out.println();
-						System.out.printf("GroupType : %s\n", parameters.getGroupType(i));
-						System.out.printf("Parameter : %s\n", parameters.getParameter(i));
-						System.out.println();
-						continue;
-					}
-					inputParameter(parameters.parameterArr[i]);
-				}
+
+			// 선택한 Parameter가 이미 설정되어있는지 확인
+			// 설정되어있으면 다음 내용 출력 후 continue
+			if (parameters.parameterArr[intTemp] != null) {
+				System.out.printf("%s group already exists.\n", parameters.getGroupType(intTemp));
+				System.out.println();
+				System.out.printf("GroupType : %s\n", parameters.getGroupType(intTemp));
+				System.out.printf("Parameter : %s\n", parameters.getParameter(intTemp));
+				System.out.println();
+				continue;
 			}
-
+			// 확인한 Parameter의 인덱스와 GroupType 인자로 전달
+			inputParameter(parameters.parameterArr[intTemp], gtTemp);
 		}
 
 	}
@@ -156,29 +148,32 @@ public class Main implements HandleException {
 		while (true) {
 			System.out.println("** Pres 'end', if you want to exit! **");
 			System.out.print("which group (ideal, likely, defect)? ");
-			String temp = sc.next();
+			// 유저 입력
+			String temp = sc.next().toLowerCase();
 			System.out.println();
-
+			
 			if (temp.equals("end")) { // end 입력시 종료
 				return;
 				// ideal, likely, defect, end 이외의 값이 들어오면 continue
-			} else if (parameters.checkNotAll(temp)) {
+			} else if ((!(temp.equals("ideal") || temp.equals("likely") || temp.equals("defect")))) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
 			}
+			
+			// GroupType 중 유저입력값 찾아 임시저장
+			GroupType gtTemp = GroupType.valueOf(temp.toUpperCase());
+			// GroupType 인덱스 임시저장
+			int intTemp = gtTemp.ordinal();
 
 			// Parameter 이름들과 User 입력한 값 비교
-			for (int i = 0; i < parameters.getArrLength(); i++) {
-				if (parameters.checkGT(i, temp)) {
-					if (parameters.getParameter(i) == null) {
-						System.out.println("No parameter. Set the parameter first.");
-						System.out.println();
-						continue;
-					}
-					inputParameter(parameters.parameterArr[i]);
-				}
+			if (parameters.parameterArr[intTemp] == null) {
+				System.out.println("No parameter. Set the parameter first.");
+				System.out.println();
+				continue;
 			}
+			// 확인한 Parameter의 인덱스와 GroupType 인자로 전달
+			inputParameter(parameters.parameterArr[intTemp], gtTemp);
 
 		}
 	}
@@ -190,7 +185,8 @@ public class Main implements HandleException {
 	// ## : 선택된 Parameter의 필드값 설정
 	// #######################################
 
-	static void inputParameter(Parameter p) {
+	static void inputParameter(Parameter p, GroupType gt) {
+		p = new Parameter(gt);
 		while (true) {
 			System.out.println("======================");
 			System.out.println(" 1.  Age");
@@ -202,8 +198,14 @@ public class Main implements HandleException {
 			System.out.print("Choose One : ");
 			userInputNum = sc.next();
 			System.out.println();
-			if (userInputNum.equals("5")) // 5입력시 종료
+			if (userInputNum.equals("5")) { // 5입력시 종료
+				// Parameter 설정 완료 후 모든 Customer 분류
+				// Customer의 수가 0일때는 실시하지 않음
+				if (allofCustomers.getArrLength() != 0) {
+					classify();
+				}
 				return;
+			}
 			// Parameter 필드중 user가 선택한 값 설정 메소드 호출
 			else if (userInputNum.equals("1") || userInputNum.equals("2") || userInputNum.equals("3")
 					|| userInputNum.equals("4"))
@@ -223,22 +225,22 @@ public class Main implements HandleException {
 	// ## : Parameter 중 user가 선택한 값을 set하는 메소드
 	// #######################################
 	// #######################################
-	// ## 61. p : 선택된 Parameter 
+	// ## 61. p : 선택된 Parameter
 	// ## x : 메뉴의 번호
 	// #######################################
-	
+
 	static void inputParameterData(Parameter p, int x) {
-		
+
 		// 메뉴 1
 		// Age 설정
 		if (x == 1) {
 			while (true) {
 				try {
-					
+
 					// Minnimum Age 설정
 					System.out.print("Input Minimum Age : ");
 					userInput = sc.nextInt();
-					
+
 					// 0 ~ 100 이외의 값이 들어오면 continue
 					if (!((userInput >= 0) && (userInput <= 100))) {
 						System.out.println();
@@ -251,7 +253,7 @@ public class Main implements HandleException {
 					// Maximum Age 설정
 					System.out.print("Input Maximum Age : ");
 					userInput = sc.nextInt();
-					
+
 					// 0 ~ 100 이외의 값이 들어오면 continue
 					if (!((userInput >= 0) && (userInput <= 100))) {
 						System.out.println();
@@ -271,14 +273,14 @@ public class Main implements HandleException {
 					System.out.println();
 				}
 			}
-			
-		// 메뉴 2
-		// Gender 설정
+
+			// 메뉴 2
+			// Gender 설정
 		} else if (x == 2) {
 			while (true) {
 				System.out.print("Input Gender : ");
 				String temp = sc.next().toLowerCase();
-				
+
 				// Male, Female 이외의 값 입력 시 continue
 				if (!(temp.equals("male") || temp.equals("female"))) {
 					System.out.println();
@@ -290,22 +292,22 @@ public class Main implements HandleException {
 				System.out.println();
 				break;
 			}
-			
-		// 메뉴 3
-		// Location 설정
+
+			// 메뉴 3
+			// Location 설정
 		} else if (x == 3) {
 			System.out.print("Input Location : ");
 			p.setLocation(sc.next().toLowerCase());
 			System.out.println();
-			
-		// 메뉴 4
-		// Online Spent Time 설정
+
+			// 메뉴 4
+			// Online Spent Time 설정
 		} else if (x == 4) {
 			while (true) {
 				try {
 					System.out.print("Input Online Spent Time : ");
 					userInput = sc.nextInt();
-					
+
 					// 값이 음수면 continue
 					if (userInput < 0) {
 						System.out.println();
@@ -316,7 +318,7 @@ public class Main implements HandleException {
 					p.setSpentTime(userInput);
 					System.out.println();
 					break;
-					
+
 					// user가 int이외의 값 입력 시 예외처리
 				} catch (InputMismatchException e) {
 					sc.next();
@@ -326,11 +328,9 @@ public class Main implements HandleException {
 				}
 			}
 		}
-		// Parameter가 설정되면 parameter 필드에 값 부여
-		// Parameter 기설정 확인용
-		p.setParameter();
+
 	}
-	
+
 	// ------------------------------------------------------
 
 	// #######################################
@@ -342,26 +342,27 @@ public class Main implements HandleException {
 		while (true) {
 			System.out.println("** Pres 'end', if you want to exit! **");
 			System.out.print("which group (ideal, likely, defect)? ");
-			String temp = sc.next();
+			String temp = sc.next().toLowerCase();
 			System.out.println();
-
+			
 			if (temp.equals("end")) { // end 입력시 종료
 				return;
 				// ideal, likely, defect, end 이외의 값이 들어오면 continue
-			} else if (parameters.checkNotAll(temp)) {
+			} else if ((!(temp.equals("ideal") || temp.equals("likely") || temp.equals("defect")))) {
 				System.out.println("Invalid Input. Please try again.");
 				System.out.println();
 				continue;
 			}
 			
-			// Parameter 이름들과 User 입력한 값 비교 후 내용 출력
-			for (int i = 0; i < parameters.getArrLength(); i++) {
-				if (parameters.checkGT(i, temp)) {
-					System.out.printf("GroupType : %s\n", parameters.getGroupType(i));
-					System.out.printf("Prameter : %s\n", parameters.getParameter(i));
-					System.out.println();
-				}
-			}
+			// GroupType 중 유저입력값 찾아 임시저장
+			GroupType gtTemp = GroupType.valueOf(temp.toUpperCase());
+			// GroupType 인덱스 임시저장
+			int intTemp = gtTemp.ordinal();
+
+			// User가 선택한 Parameter 내용 출력
+			System.out.printf("GroupType : %s\n", parameters.getGroupType(intTemp));
+			System.out.printf("Prameter : %s\n", parameters.getParameterArr()[intTemp].toString());
+			System.out.println();
 
 		}
 	}
@@ -372,7 +373,7 @@ public class Main implements HandleException {
 	// ## 80. Enter Customer Data 메뉴
 	// ## : Customer Data 설정, 조회, 수정 관리
 	// #######################################
-	
+
 	static void enterCustomerData() {
 		while (true) {
 			System.out.println("======================");
@@ -387,21 +388,10 @@ public class Main implements HandleException {
 
 			if (userInputNum.equals("1")) {
 				setCustomerData();
-				// Customer 설정 완료 후 모든 Customer 분류
-				// Customer의 수가 0일때는 실시하지 않음
-				// 		(0일경우 : setCustomerData() 실행 후 설정하지 않고 종료시)
-				if (allofCustomers.getArrLength() != 0) {
-					classification();
-				}
 			} else if (userInputNum.equals("2")) {
 				viewCustomerData();
 			} else if (userInputNum.equals("3")) {
 				editCustomerData();
-				// Parameter 설정 완료 후 모든 Customer 분류
-				// Customer의 수가 0일때는 실시하지 않음
-				if (allofCustomers.getArrLength() != 0) {
-					classification();
-				}
 			} else if (userInputNum.equals("4")) {
 				return;
 			} else {
@@ -417,15 +407,15 @@ public class Main implements HandleException {
 
 	// #######################################
 	// ## 90. Set Customer Data 메뉴
-	// ## : Customer 생성 후 Data 세부내역 설정 
+	// ## : Customer 생성 후 Data 세부내역 설정
 	// #######################################
-	
+
 	// 전체 Customer 객체 배열
 	static Customers allofCustomers = new Customers();
 	// Customer 수
 	static int numofCustomers = 0;
 	// 기존 Customer 수 저장 변수
-	static int oldNum = 0; 
+	static int oldNum = 0;
 	// user가 입력한 값
 	static int userInput = 0;
 
@@ -447,7 +437,7 @@ public class Main implements HandleException {
 				}
 				// user가 입력한 값을 Customer 수에 더함
 				numofCustomers += userInput;
-				// 새  배열 생성 + 배열 원소 복사
+				// 새 배열 생성 + 배열 원소 복사
 				allofCustomers.init(numofCustomers);
 				// Customer 객체 생성 후 배열에 저장
 				allofCustomers.createCustomer(oldNum, numofCustomers);
@@ -468,15 +458,15 @@ public class Main implements HandleException {
 			}
 		}
 	}
-	
+
 	// ------------------------------------------------------
 
 	// #######################################
 	// ## 110. Select Set Data 메뉴
-	// ## : Customer 객체의 필드값 설정메뉴 
+	// ## : Customer 객체의 필드값 설정메뉴
 	// #######################################
 	// #######################################
-	// ## 111. Customer 객체배열의 Index를 인자로 받아와 접근 
+	// ## 111. Customer 객체배열의 Index를 인자로 받아와 접근
 	// ## 각 Customer 객체별로 필드값을 설정
 	// #######################################
 
@@ -494,8 +484,14 @@ public class Main implements HandleException {
 			System.out.print("Choose One : ");
 			userInputNum = sc.next();
 			System.out.println();
-			if (userInputNum.equals("5")) // 5입력시 종료
+			if (userInputNum.equals("5")) { // 5입력시 종료
+				// Parameter 설정 완료 후 모든 Customer 분류
+				// Customer의 수가 0일때는 실시하지 않음
+				if (allofCustomers.getArrLength() != 0) {
+					classify();
+				}
 				return;
+			}
 			// Parameter 필드중 user가 선택한 값 설정 메소드 호출
 			else if (userInputNum.equals("1") || userInputNum.equals("2") || userInputNum.equals("3")
 					|| userInputNum.equals("4"))
@@ -512,7 +508,7 @@ public class Main implements HandleException {
 
 	// #######################################
 	// ## 120. View Customer Data 메뉴
-	// ## : 모든 Customer 객체의 Data 출력 
+	// ## : 모든 Customer 객체의 Data 출력
 	// #######################################
 
 	static void viewCustomerData() {
@@ -533,9 +529,9 @@ public class Main implements HandleException {
 
 	// #######################################
 	// ## 130. Edit Customer Data 메뉴
-	// ## : Customer 객체의 필드값 수정메뉴 
+	// ## : Customer 객체의 필드값 수정메뉴
 	// #######################################
-	
+
 	static void editCustomerData() {
 		// Customer 객체가 존재하는지 검사
 		// Customer가 설정되지 않았으면 아래 문구 출력후 종료
@@ -571,12 +567,12 @@ public class Main implements HandleException {
 			}
 		}
 	}
-	
+
 	// ------------------------------------------------------
 
 	// #######################################
 	// ## 140. Input Customer Data 메소드
-	// ## : Customer 객체의 필드값 수정메뉴 
+	// ## : Customer 객체의 필드값 수정메뉴
 	// #######################################
 	// #######################################
 	// ## 141. int x : Customer의 index,
@@ -584,7 +580,7 @@ public class Main implements HandleException {
 	// #######################################
 
 	static void inputCustomerData(int x, int y) {
-		
+
 		// 메뉴 1
 		// Age 설정
 		if (y == 1) {
@@ -610,14 +606,14 @@ public class Main implements HandleException {
 					System.out.println();
 				}
 			}
-			
-		// 메뉴 2
-		// Gender 설정
+
+			// 메뉴 2
+			// Gender 설정
 		} else if (y == 2) {
 			while (true) {
 				System.out.print("Input Gender : ");
 				String temp = sc.next().toLowerCase();
-				
+
 				// Male, Female 이외의 값 입력 시 continue
 				if (!(temp.equals("male") || temp.equals("female"))) {
 					System.out.println();
@@ -629,22 +625,22 @@ public class Main implements HandleException {
 				System.out.println();
 				break;
 			}
-			
-		// 메뉴 3
-		// Location 설정
+
+			// 메뉴 3
+			// Location 설정
 		} else if (y == 3) {
 			System.out.print("Input Location : ");
 			allofCustomers.setLocation(x, sc.next().toLowerCase());
 			System.out.println();
-			
-		// 메뉴 4
-		// Online Spent Time 설정
+
+			// 메뉴 4
+			// Online Spent Time 설정
 		} else if (y == 4) {
 			while (true) {
 				try {
 					System.out.print("Input Online Spent Time : ");
 					userInput = sc.nextInt();
-					
+
 					// 값이 음수면 continue
 					if (userInput < 0) {
 						System.out.println();
@@ -655,7 +651,7 @@ public class Main implements HandleException {
 					allofCustomers.setSpentTime(x, userInput);
 					System.out.println();
 					break;
-					
+
 					// user가 int이외의 값 입력 시 예외처리
 				} catch (InputMismatchException e) {
 					sc.next();
@@ -674,20 +670,20 @@ public class Main implements HandleException {
 	// ## 140. Summary 메뉴
 	// ## : 전체 Customer를 Summary 해서 출력
 	// #######################################
-	
+
 	// 각 기준별 Customer 객체 배열
-	static Customers idealGroup = new Customers(ideal, GroupType.IDEAL);
-	static Customers likelyGroup = new Customers(likely, GroupType.LIKELY);
-	static Customers defectGroup = new Customers(defect, GroupType.DEFECT);
-	static Customers others = new Customers(GroupType.NONE);
+	static Customers idealGroup = new Customers(ideal);
+	static Customers likelyGroup = new Customers(likely);
+	static Customers defectGroup = new Customers(defect);
+	static Customers others = new Customers();
 
 	// 전체 Customer를 기준별로 분류
-	static void classification() {
-		if (ideal.getParameter() != null)
+	static void classify() {
+		if (ideal != null)
 			idealGroup.creatCustomerArr(allofCustomers);
-		if (likely.getParameter() != null)
+		if (likely != null)
 			likelyGroup.creatCustomerArr(allofCustomers);
-		if (defect.getParameter() != null)
+		if (defect != null)
 			defectGroup.creatCustomerArr(allofCustomers);
 		others.creatCustomerArr(allofCustomers, parameters);
 	}
@@ -700,5 +696,4 @@ public class Main implements HandleException {
 		others.summary();
 	}
 
-	
 }

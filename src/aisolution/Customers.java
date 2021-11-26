@@ -5,23 +5,16 @@ public class Customers {
 	private Customer[] customerArr;
 	private int arrLength; // 배열의 길이
 	private Parameter parameter;
-	private GroupType groupType;
 	
 	// constructor
-	public Customers(GroupType groupType) {
-		this.arrLength = 0;
-		this.customerArr = null;
-		this.groupType = groupType;
-	}
 	public Customers() {
 		this.arrLength = 0;
 		this.customerArr = null;
 	}
 	
-	public Customers(Parameter parameter, GroupType groupType) {
+	public Customers(Parameter parameter) {
 		this.arrLength = 0;
 		this.parameter = parameter;
-		this.groupType = groupType;
 	}
 
 	// setter, getter
@@ -88,7 +81,7 @@ public class Customers {
 	public void creatCustomerArr(Customers c) {
 		int count = 0;
 		for(int i = 0; i < c.getArrLength(); i++) {
-			if (this.parameter.classification(c.getCustomerArr()[i])) {
+			if (this.parameter.classify(c.getCustomerArr()[i])) {
 				count++;
 			}
 		}
@@ -96,9 +89,9 @@ public class Customers {
 		this.arrLength = count;
 		int groupIdx = 0;
 		for(int i = 0; i < c.getArrLength(); i++) {
-			if (this.parameter.classification(c.getCustomerArr()[i])) {
+			if (this.parameter.classify(c.getCustomerArr()[i])) {
 				this.getCustomerArr()[groupIdx++] = c.getCustomerArr()[i];
-				c.getCustomerArr()[i].setGroupType(this.groupType);
+				c.getCustomerArr()[i].setGroupType(this.parameter.getGroupType());
 			}
 		}
 	}
@@ -106,7 +99,7 @@ public class Customers {
 	public void creatCustomerArr(Customers c, Parameters p) {
 		int count = 0;
 		for (int i = 0; i < c.getArrLength(); i++) {
-			if (!(p.classification(c.getCustomerArr()[i]))) {
+			if (!(p.classify(c.getCustomerArr()[i]))) {
 				count++;
 			}
 		}
@@ -114,9 +107,9 @@ public class Customers {
 		this.arrLength = count;
 		int groupIdx = 0;
 		for (int i = 0; i < c.getArrLength(); i++) {
-			if (!(p.classification(c.getCustomerArr()[i]))) {
+			if (!(p.classify(c.getCustomerArr()[i]))) {
 				this.getCustomerArr()[groupIdx++] = c.getCustomerArr()[i];
-				c.getCustomerArr()[i].setGroupType(this.groupType);
+				c.getCustomerArr()[i].setGroupType(GroupType.NONE);
 			}
 		}
 	}
@@ -124,8 +117,8 @@ public class Customers {
 	public void summary() {
 		System.out.println("======================");
 		if(this.parameter != null) {
-		System.out.printf("%s Group : %d customer(s)\n", this.groupType, this.arrLength);
-		System.out.printf("[Parameter] %s\n", this.parameter.getParameter());
+		System.out.printf("%s Group : %d customer(s)\n", this.parameter.getGroupType(), this.arrLength);
+		System.out.printf("[Parameter] %s\n", this.parameter.toString());
 		}
 		else {
 			System.out.printf("Others : %d customer(s)\n", this.arrLength);

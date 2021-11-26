@@ -20,23 +20,13 @@ public class Parameters {
 		this.parameterArr = parameterArr;
 	}
 	
-	public boolean classification (Customer c) {
+	public boolean classify (Customer c) {
 		boolean[] x = new boolean[3];
 		for (int i = 0; i < 3; i++) {
-			x[i] = this.parameterArr[i].classification(c);
-			if (this.parameterArr[i].getParameter() == null) x[i] = false;
+			x[i] = this.parameterArr[i].classify(c);
+			if (this.parameterArr[i] == null) x[i] = false;
 		}
 		return x[0] || x[1] || x[2];
-	}
-	
-	public boolean checkGT(int x, String s) {
-		return this.parameterArr[x].checkGT(s);
-	}
-	
-	public boolean checkNotAll(String s) {
-		return !(this.parameterArr[0].checkGT(s) 
-				|| this.parameterArr[1].checkGT(s) 
-				|| this.parameterArr[2].checkGT(s));
 	}
 	
 	public int getArrLength() {
@@ -44,7 +34,7 @@ public class Parameters {
 	}
 	
 	public String getParameter(int x) {
-		return this.parameterArr[x].getParameter();
+		return this.parameterArr[x].toString();
 	}
 	
 	public GroupType getGroupType(int x) {

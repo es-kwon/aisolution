@@ -1,16 +1,14 @@
 package aisolution;
 
 public class Parameter {
-	//field
+	// field
 	private int minAge;
 	private int maxAge;
 	private String gender;
 	private String location;
 	private int spentTime;
 	private GroupType groupType;
-	private String parameter;
-	private int numofcustomers;
-	
+
 	// constructor
 	public Parameter(GroupType g) {
 		this.groupType = g;
@@ -58,7 +56,7 @@ public class Parameter {
 	public void setSpentTime(int spentTime) {
 		this.spentTime = spentTime;
 	}
-	
+
 	public GroupType getGroupType() {
 		return groupType;
 	}
@@ -66,62 +64,32 @@ public class Parameter {
 	public void setGroupType(GroupType groupType) {
 		this.groupType = groupType;
 	}
-
-	public void setParameter() {
-		this.parameter = this.toString();
-	}
-	
-	public String getParameter() {
-		return parameter;
-	}
-
-	public int getNumofCustomers() {
-		return numofcustomers;
-	}
-	
-	public void setNumofCustomers(Customer[] p) {
-		int count = 0;
-		for(int i = 0; i < p.length; i++) {
-			if (this.classification(p[i])) {
-				count++;
-			}
-		}
-		this.numofcustomers = count;
-	}
 	
 	public void printCustomers(Customer[] p) {
 		int count = 0;
-		for(int i = 0; i < p.length; i++) {
-			if (this.classification(p[i])) {
+		for (int i = 0; i < p.length; i++) {
+			if (this.classify(p[i])) {
 				System.out.printf("No. %d => %s", count + 1, p[i]);
 				count++;
 			}
 		}
 	}
-	
-	public boolean classification (Customer c) {
-		if(c.getGender() == null) c.setGender("null");
-		if(c.getLocation() == null) c.setLocation("null");
-		return (c.getAge() >= this.getMinAge()
-				&& c.getAge() <= this.getMaxAge())
-				&& c.getGender().equals(this.getGender())
-				&& c.getLocation().endsWith(this.getLocation())
+
+	public boolean classify(Customer c) {
+		if (c.getGender() == null)
+			c.setGender("null");
+		if (c.getLocation() == null)
+			c.setLocation("null");
+		return (c.getAge() >= this.getMinAge() && c.getAge() <= this.getMaxAge())
+				&& c.getGender().equals(this.getGender()) && c.getLocation().endsWith(this.getLocation())
 				&& c.getSpentTime() == this.getSpentTime();
 	}
-	
-	public boolean checkGT(String s) {
-		return this.getGroupType().toString().equals(s.toUpperCase());
-	}
-	
 
 	// toString
 	@Override
 	public String toString() {
-		return String.format("minAge : %d, maxAge : %d, Gender : %s, Location : %s, SpentTime : %d",
-				minAge, maxAge, gender, location, spentTime);
+		return String.format("minAge : %d, maxAge : %d, Gender : %s, Location : %s, SpentTime : %d", minAge, maxAge,
+				gender, location, spentTime);
 	}
-	
-	
-	
 
 }
