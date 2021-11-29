@@ -109,7 +109,7 @@ public class Customers {
 		int count = 0;
 		// 전체 Customer 중 Parameter에 해당하는 Customer 수 확인
 		for (int i = 0; i < c.getArrLength(); i++) {
-			if (this.parameter.classifybyParameter(c.getCustomerArr()[i])) {
+			if (c.getCustomerArr()[i].classifybyParameter(this.parameter)) {
 				count++;
 			}
 		}
@@ -120,7 +120,7 @@ public class Customers {
 
 		// 배열에 저장
 		for (int i = 0; i < c.getArrLength(); i++) {
-			if (this.parameter.classifybyParameter(c.getCustomerArr()[i])) {
+			if (c.getCustomerArr()[i].classifybyParameter(this.parameter)) {
 				// Parameter에 해당하면 배열에 저장 후 groupIdx 1 증가
 				this.getCustomerArr()[groupIdx++] = c.getCustomerArr()[i];
 				// 해당되는 Customer 객체에 Group Type 할당
@@ -140,7 +140,7 @@ public class Customers {
 		int count = 0;
 		// 전체 Customer 중 어느 Parameter에도 해당하지 않는 Customer 수 확인
 		for (int i = 0; i < c.getArrLength(); i++) {
-			if (!(p.classifybyParameters(c.getCustomerArr()[i]))) {
+			if (!(c.getCustomerArr()[i].classifybyParameters(p))) {
 				count++;
 			}
 		}
@@ -151,7 +151,7 @@ public class Customers {
 
 		// 배열에 저장
 		for (int i = 0; i < c.getArrLength(); i++) {
-			if (!(p.classifybyParameters(c.getCustomerArr()[i]))) {
+			if (!(c.getCustomerArr()[i].classifybyParameters(p))) {
 				// 어느 Parameter에도 해당하지 않으면 배열에 저장 후 groupIdx 1 증가
 				this.getCustomerArr()[groupIdx++] = c.getCustomerArr()[i];
 				// 해당되는 Customer 객체에 Group Type (NONE) 할당

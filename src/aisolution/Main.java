@@ -120,7 +120,6 @@ public class Main implements HandleException {
 			// GroupType 인덱스 임시저장
 			int intTemp = gtTemp.ordinal();
 
-
 			// 선택한 Parameter가 이미 설정되어있는지 확인
 			// 설정되어있으면 다음 내용 출력 후 continue
 			if (parameters.parameterArr[intTemp] != null) {

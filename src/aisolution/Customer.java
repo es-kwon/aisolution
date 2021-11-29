@@ -62,5 +62,36 @@ public class Customer {
 		return String.format("Age: %d, Gender : %s, Location : %s, SpentTime : %d, GroupType : %s", age, gender,
 				location, spentTime, groupType);
 	}
+	
+	// ------------------------------------------------------
+
+	// #######################################
+	// ## 10. Customer를 Parameter로 검사하는 메소드
+	// ## : Customer를 인자로 받아 Parameter에 해당하는지 검사
+	// #######################################
+	
+	public boolean classifybyParameter(Parameter p) {
+		return (age >= p.getMinAge() && age <= p.getMaxAge())
+				&& gender.equals(p.getGender()) && location.endsWith(p.getLocation())
+				&& spentTime == p.getSpentTime();
+	}
+	
+	// ------------------------------------------------------
+
+	// #######################################
+	// ## 20. Customer를 Parameter들로 검사하는 메소드
+	// ## : Customer를 인자로 받아 모든 Parameter에 해당하는지 검사
+	// #######################################
+	
+	public boolean classifybyParameters (Parameters p) {
+		boolean[] x = new boolean[3];
+		for (int i = 0; i < 3; i++) {
+			x[i] = this.classifybyParameter(p.parameterArr[i]);
+			
+			// Parameter가 지정되어있지 않으면 false 출력
+			if (p.parameterArr[i] == null) x[i] = false;
+		}
+		return x[0] || x[1] || x[2];
+	}
 
 }

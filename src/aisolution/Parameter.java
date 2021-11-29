@@ -72,17 +72,4 @@ public class Parameter {
 				gender, location, spentTime);
 	}
 
-	// ------------------------------------------------------
-
-	// #######################################
-	// ## 10. Customer를 Parameter로 검사하는 메소드
-	// ## : Customer를 인자로 받아 Parameter에 해당하는지 검사
-	// #######################################
-	
-	public boolean classifybyParameter(Customer c) {
-		return (c.getAge() >= this.getMinAge() && c.getAge() <= this.getMaxAge())
-				&& c.getGender().equals(this.getGender()) && c.getLocation().endsWith(this.getLocation())
-				&& c.getSpentTime() == this.getSpentTime();
-	}
-
 }
