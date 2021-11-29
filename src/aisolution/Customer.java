@@ -1,17 +1,21 @@
 package aisolution;
 
 public class Customer {
-	// field
+
+	// ## field
 	private int age;
 	private String gender;
 	private String location;
 	private int spentTime;
 	private GroupType groupType;
-	
-	// constructor
-	public Customer() {}
 
-	// setter, getter
+	// ## constructor
+	public Customer() {
+		this.gender = "null";
+		this.location = "null";
+	}
+
+	// ## setter, getter
 	public int getAge() {
 		return age;
 	}
@@ -43,7 +47,7 @@ public class Customer {
 	public void setSpentTime(int spentTime) {
 		this.spentTime = spentTime;
 	}
-	
+
 	public GroupType getGroupType() {
 		return groupType;
 	}
@@ -52,12 +56,11 @@ public class Customer {
 		this.groupType = groupType;
 	}
 
-	// toString
+	// ## toString
 	@Override
 	public String toString() {
-		return String.format
-				("age : %d, gender : %s, location : %s, spent_time : %d",
-						age, gender, location, spentTime);
+		return String.format("Age: %d, Gender : %s, Location : %s, SpentTime : %d, GroupType : %s", age, gender,
+				location, spentTime, groupType);
 	}
 
 }

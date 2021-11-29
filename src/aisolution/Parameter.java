@@ -1,7 +1,7 @@
 package aisolution;
 
 public class Parameter {
-	// field
+	// ## field
 	private int minAge;
 	private int maxAge;
 	private String gender;
@@ -9,14 +9,14 @@ public class Parameter {
 	private int spentTime;
 	private GroupType groupType;
 
-	// constructor
+	// ## constructor
 	public Parameter(GroupType g) {
 		this.groupType = g;
 		this.gender = "null";
 		this.location = "null";
 	}
 
-	// getter, setter
+	// ## getter, setter
 	public int getMinAge() {
 		return minAge;
 	}
@@ -64,32 +64,25 @@ public class Parameter {
 	public void setGroupType(GroupType groupType) {
 		this.groupType = groupType;
 	}
-	
-	public void printCustomers(Customer[] p) {
-		int count = 0;
-		for (int i = 0; i < p.length; i++) {
-			if (this.classify(p[i])) {
-				System.out.printf("No. %d => %s", count + 1, p[i]);
-				count++;
-			}
-		}
-	}
 
-	public boolean classify(Customer c) {
-		if (c.getGender() == null)
-			c.setGender("null");
-		if (c.getLocation() == null)
-			c.setLocation("null");
-		return (c.getAge() >= this.getMinAge() && c.getAge() <= this.getMaxAge())
-				&& c.getGender().equals(this.getGender()) && c.getLocation().endsWith(this.getLocation())
-				&& c.getSpentTime() == this.getSpentTime();
-	}
-
-	// toString
+	// ## toString
 	@Override
 	public String toString() {
 		return String.format("minAge : %d, maxAge : %d, Gender : %s, Location : %s, SpentTime : %d", minAge, maxAge,
 				gender, location, spentTime);
+	}
+
+	// ------------------------------------------------------
+
+	// #######################################
+	// ## 10. Customer를 Parameter로 검사하는 메소드
+	// ## : Customer를 인자로 받아 Parameter에 해당하는지 검사
+	// #######################################
+	
+	public boolean classifybyParameter(Customer c) {
+		return (c.getAge() >= this.getMinAge() && c.getAge() <= this.getMaxAge())
+				&& c.getGender().equals(this.getGender()) && c.getLocation().endsWith(this.getLocation())
+				&& c.getSpentTime() == this.getSpentTime();
 	}
 
 }
