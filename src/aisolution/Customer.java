@@ -67,7 +67,7 @@ public class Customer {
 
 	// #######################################
 	// ## 10. Customer를 Parameter로 검사하는 메소드
-	// ## : Customer를 인자로 받아 Parameter에 해당하는지 검사
+	// ## : Parameter를 인자로 받아 Customer가 이에 해당하는지 검사
 	// #######################################
 	
 	public boolean classifybyParameter(Parameter p) {
@@ -80,7 +80,8 @@ public class Customer {
 
 	// #######################################
 	// ## 20. Customer를 Parameter들로 검사하는 메소드
-	// ## : Customer를 인자로 받아 모든 Parameter에 해당하는지 검사
+	// ## : Parameters를 인자로 받아 Customer가
+	// ## : 모든 Parameter에 해당하는지 검사
 	// #######################################
 	
 	public boolean classifybyParameters (Parameters p) {

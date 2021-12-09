@@ -236,7 +236,7 @@ public class Main implements HandleException {
 			while (true) {
 				try {
 
-					// Minnimum Age 설정
+					// Minimum Age 설정
 					System.out.print("Input Minimum Age : ");
 					userInput = sc.nextInt();
 
@@ -458,14 +458,15 @@ public class Main implements HandleException {
 		}
 	}
 
+	
 	// ------------------------------------------------------
 
 	// #######################################
-	// ## 110. Select Set Data 메뉴
+	// ## 100. Select Set Data 메뉴
 	// ## : Customer 객체의 필드값 설정메뉴
 	// #######################################
 	// #######################################
-	// ## 111. Customer 객체배열의 Index를 인자로 받아와 접근
+	// ## 101. Customer 객체배열의 Index를 인자로 받아와 접근
 	// ## 각 Customer 객체별로 필드값을 설정
 	// #######################################
 
@@ -506,7 +507,7 @@ public class Main implements HandleException {
 	// ------------------------------------------------------
 
 	// #######################################
-	// ## 120. View Customer Data 메뉴
+	// ## 110. View Customer Data 메뉴
 	// ## : 모든 Customer 객체의 Data 출력
 	// #######################################
 
@@ -527,7 +528,7 @@ public class Main implements HandleException {
 	// ------------------------------------------------------
 
 	// #######################################
-	// ## 130. Edit Customer Data 메뉴
+	// ## 120. Edit Customer Data 메뉴
 	// ## : Customer 객체의 필드값 수정메뉴
 	// #######################################
 
@@ -570,11 +571,11 @@ public class Main implements HandleException {
 	// ------------------------------------------------------
 
 	// #######################################
-	// ## 140. Input Customer Data 메소드
+	// ## 130. Input Customer Data 메소드
 	// ## : Customer 객체의 필드값 수정메뉴
 	// #######################################
 	// #######################################
-	// ## 141. int x : Customer의 index,
+	// ## 131. int x : Customer의 index,
 	// ## int y : 메뉴의 번호
 	// #######################################
 
