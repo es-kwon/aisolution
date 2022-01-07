@@ -56,9 +56,9 @@ public class Main implements HandleException {
 	// #######################################
 
 	// 기준별 객체 및 기준그룹 객체 배열 생성
-	static Parameter ideal;
-	static Parameter likely;
-	static Parameter defect;
+	static Parameter ideal = new Parameter(GroupType.IDEAL);
+	static Parameter likely = new Parameter(GroupType.LIKELY);
+	static Parameter defect = new Parameter(GroupType.DEFECT);
 	static Parameters parameters = new Parameters(ideal, likely, defect);
 
 	static String userInputNum = ""; // user가 입력한 값
@@ -159,7 +159,7 @@ public class Main implements HandleException {
 				System.out.println();
 				continue;
 			}
-			
+			// 유저입력값 찾아 임시저장
 			// GroupType 중 유저입력값 찾아 임시저장
 			GroupType gtTemp = GroupType.valueOf(temp.toUpperCase());
 			// GroupType 인덱스 임시저장
@@ -185,7 +185,6 @@ public class Main implements HandleException {
 	// #######################################
 
 	static void inputParameter(Parameter p, GroupType gt) {
-		p = new Parameter(gt);
 		while (true) {
 			System.out.println("======================");
 			System.out.println(" 1.  Age");
