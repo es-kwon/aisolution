@@ -7,8 +7,7 @@ public class Parameters {
 	// ## constructor
 	public Parameters(Parameter ideal, Parameter likely,
 			Parameter defect){
-		Parameter[] parameters = {ideal, likely, defect};
-		this.parameterArr = parameters;
+		this.parameterArr = new Parameter[]{ideal, likely, defect};
 	}
 
 	// ## getter, setter

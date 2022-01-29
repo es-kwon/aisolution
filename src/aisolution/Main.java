@@ -20,7 +20,7 @@ public class Main implements HandleException {
 
 		while (true) {
 			System.out.println("======================");
-			System.out.println(" 1.   Set Customer Paramer");
+			System.out.println(" 1.   Set Customer Parameter");
 			System.out.println(" 2.   Enter Customer Data");
 			System.out.println(" 3.   Summary");
 			System.out.println(" 4.   Quit");
@@ -122,7 +122,7 @@ public class Main implements HandleException {
 
 			// 선택한 Parameter가 이미 설정되어있는지 확인
 			// 설정되어있으면 다음 내용 출력 후 continue
-			if (parameters.parameterArr[intTemp] != null) {
+			if (parameters.parameterArr[intTemp].isSet()) {
 				System.out.printf("%s group already exists.\n", parameters.getGroupType(intTemp));
 				System.out.println();
 				System.out.printf("GroupType : %s\n", parameters.getGroupType(intTemp));
@@ -130,8 +130,8 @@ public class Main implements HandleException {
 				System.out.println();
 				continue;
 			}
-			// 확인한 Parameter의 인덱스와 GroupType 인자로 전달
-			inputParameter(parameters.parameterArr[intTemp], gtTemp);
+			// 확인한 Parameter의 인덱스 인자로 전달
+			inputParameter(parameters.parameterArr[intTemp]);
 		}
 
 	}
@@ -159,20 +159,20 @@ public class Main implements HandleException {
 				System.out.println();
 				continue;
 			}
-			// 유저입력값 찾아 임시저장
+			
 			// GroupType 중 유저입력값 찾아 임시저장
 			GroupType gtTemp = GroupType.valueOf(temp.toUpperCase());
 			// GroupType 인덱스 임시저장
 			int intTemp = gtTemp.ordinal();
 
 			// Parameter 이름들과 User 입력한 값 비교
-			if (parameters.parameterArr[intTemp] == null) {
+			if (!parameters.parameterArr[intTemp].isSet()) {
 				System.out.println("No parameter. Set the parameter first.");
 				System.out.println();
 				continue;
 			}
-			// 확인한 Parameter의 인덱스와 GroupType 인자로 전달
-			inputParameter(parameters.parameterArr[intTemp], gtTemp);
+			// 확인한 Parameter의 인덱스 인자로 전달
+			inputParameter(parameters.parameterArr[intTemp]);
 
 		}
 	}
@@ -184,7 +184,7 @@ public class Main implements HandleException {
 	// ## : 선택된 Parameter의 필드값 설정
 	// #######################################
 
-	static void inputParameter(Parameter p, GroupType gt) {
+	static void inputParameter(Parameter p) {
 		while (true) {
 			System.out.println("======================");
 			System.out.println(" 1.  Age");
@@ -202,6 +202,7 @@ public class Main implements HandleException {
 				if (allofCustomers.getArrLength() != 0) {
 					classify();
 				}
+				p.setSet(true);
 				return;
 			}
 			// Parameter 필드중 user가 선택한 값 설정 메소드 호출
